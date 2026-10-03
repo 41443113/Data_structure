@@ -3,7 +3,7 @@ using namespace std;
 bool is_first_subset = true;
 
 void sort(char* p, int s,int &m) {
-	for (int i = 0; i < s - 1; i++) {//®ğªw±Æ§Ç¥Ñ¤p¨ì¤j
+	for (int i = 0; i < s - 1; i++) {//æ°£æ³¡æ’åºç”±å°åˆ°å¤§
 		for (int j = 0; j < s - 1 - i; j++) {
 			if (p[j] > p[j + 1]) {
 				char sd = p[j];
@@ -13,7 +13,7 @@ void sort(char* p, int s,int &m) {
 		}
 	}
 	int news = 0;
-	for (int i = 1; i < s; i++) {//±N­«½Æªº¥h±¼¡A¤w¸g±Æ§Ç¦n¤F¡A­«½Æªº³£¾a¦A¤@°_¡A©Ò¥H¥u­n¸ò³Ì·s¦s¶i¥hªº°µ¤ñ¹ï´N¦æ
+	for (int i = 1; i < s; i++) {//å°‡é‡è¤‡çš„å»æ‰ï¼Œå·²ç¶“æ’åºå¥½äº†ï¼Œé‡è¤‡çš„éƒ½é å†ä¸€èµ·ï¼Œæ‰€ä»¥åªè¦è·Ÿæœ€æ–°å­˜é€²å»çš„åšæ¯”å°å°±è¡Œ
 		if (p[i] != p[news]) {
 			news++;
 			p[news] = p[i];
@@ -24,7 +24,7 @@ void sort(char* p, int s,int &m) {
 
 void powerset(int index,int m, bool* chosen, char* p) {
 	if (index == m) {
-		if (!is_first_subset) {//§PÂ_¬O§_¬°²Ä¤@­Ó¤l¶°¦X
+		if (!is_first_subset) {//åˆ¤æ–·æ˜¯å¦ç‚ºç¬¬ä¸€å€‹å­é›†åˆ
 			cout << ",";
 		}
 		is_first_subset = false;
@@ -32,7 +32,7 @@ void powerset(int index,int m, bool* chosen, char* p) {
 		bool first_element = true;
 		for (int i = 0; i < m; i++) {
 			if (chosen[i]) {
-				if (!first_element) {//§PÂ_¬O§_¬°²Ä¤@­Ó¤¸¯À
+				if (!first_element) {//åˆ¤æ–·æ˜¯å¦ç‚ºç¬¬ä¸€å€‹å…ƒç´ 
 					cout << ",";
 				}
 				cout << p[i];
@@ -43,22 +43,24 @@ void powerset(int index,int m, bool* chosen, char* p) {
 		return;
 	}
 	
-	chosen[index] = false;//¤£¿ï¤¤·í«e¤¸¯À
+	chosen[index] = false;//ä¸é¸ä¸­ç•¶å‰å…ƒç´ 
 	powerset(index + 1, m, chosen, p);
 
-	chosen[index] = true;//¿ï¤¤·í«e¤¸¯À
+	chosen[index] = true;//é¸ä¸­ç•¶å‰å…ƒç´ 
 	powerset(index + 1, m, chosen, p);
 }
 int main() {
 	int s;
+	cout << "è¼¸å…¥å…ƒç´ æ•¸é‡:";
 	cin >> s;
-	char* p = new char[s];//³B¦s¤¸¯À
+	char* p = new char[s];//è™•å­˜å…ƒç´ 
+	cout << "è¼¸å…¥å…ƒç´ :";
 	for (int i = 0; i < s; i++) {
 		cin >> p[i];
 	}
 	int m = s;
 	sort(p, s, m);
-	bool* chosen = new bool[m];//¥Î¨Ó°O¿ı¤¸¯À¬O§_­n¦C¦L
+	bool* chosen = new bool[m];//ç”¨ä¾†è¨˜éŒ„å…ƒç´ æ˜¯å¦è¦åˆ—å°
 	cout << "powerset(S) = {";
 	powerset(0, m, chosen, p);
 	cout << "}";
