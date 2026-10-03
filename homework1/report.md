@@ -201,7 +201,7 @@ A(1,4)=6
    
 本程式雖然沒有使用 Ackermann() 函式自己呼叫自己的方式，但仍然可以完成阿克曼函式的計算。
 
-另外，本程式的 Stack 容量設定為 16，當資料超過容量時會產生 Stack Overflow。因此，如果要處理更大的輸入，可以進一步修改 Stack 的容量。
+另外，本程式的 Stack 容量設定為 16，當資料超過容量時會產生 Stack Overflow。如果要處理更大的輸入，可以進一步修改 Stack 的容量。
 
 # 作業二
 
@@ -302,10 +302,29 @@ int main() {
 | 測試三   | s = 4, p = [a,b,a,c]    | (),(c),(b),(b,c),(a),(a,c),(a,b),(a,b,c)       | (),(c),(b),(b,c),(a),(a,c),(a,b),(a,b,c)       |
 
 ```shell
-$g++ Problem_2.cpp --std=c++21 -o Problem_1_2.exe$
+$g++ Problem_2.cpp --std=c++21 -o Problem_2.exe
 $.\Problem_2.exe
-Input (e.g., 3 then a b c):
-3
-a b c
+輸入元素數量:3
+輸入元素:a b c
 powerset(S) = {(),(c),(b),(b,c),(a),(a,c),(a,b),(a,b,c)}
 ```
+## 申論及開發報告
+1. 選擇遞迴與 chosen 陣列的原因
+   
+   本程式使用遞迴來實作冪集合，因為冪集合生成過程中具有樹狀分支結構(選與不選)
+
+   程式使用：
+   ```
+   bool* chosen = new bool[m];
+   ```
+   來記錄是否有被選到
+
+   在遞迴時透過
+   ```
+   chosen[index] = false;
+   powerset(index + 1, m, chosen, p);
+
+   chosen[index] = true;
+   powerset(index + 1, m, chosen, p);
+   ```
+   來進行選與不選將所有的子集合列出來，此外為避免重複的元素導致重複的集合，在先前的 sort 函式便已先將重複的去掉並將其排序好。
