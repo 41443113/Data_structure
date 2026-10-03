@@ -2,20 +2,20 @@
 using namespace std;
 
 void push_s(int* s, int& top, int capacity, int value) {
-	if (top >= capacity - 1) {//·í¶W¥X°ïÅ|¤W­­
+	if (top >= capacity - 1) {//ç•¶è¶…å‡ºå †ç–Šä¸Šé™
 		cout << "Stack Overflow";
 		return;
 	}
-	s[++top] = value;//¦s¤J°ïÅ|
+	s[++top] = value;//å­˜å…¥å †ç–Š
 }
 
 int pop_s(int* s, int& top) {
-	return s[top--];//¨ú¥X°ïÅ|
+	return s[top--];//å–å‡ºå †ç–Š
 }
 
 int Ackermann(int m, int n) {
-	int capacity = 16;//°O¾ĞÅé¤j¤p
-	int top = -1;//°ïÅ|¦ì¸m
+	int capacity = 16;//è¨˜æ†¶é«”å¤§å°
+	int top = -1;//å †ç–Šä½ç½®
 	int* s = new int[capacity];
 	push_s(s, top, capacity, m);
 	while (top >= 0) {
@@ -25,12 +25,12 @@ int Ackermann(int m, int n) {
 		}
 		else if (n == 0) {
 			n = 1;
-			push_s(s, top, capacity, m - 1);//¦s¤JA(m-1,1)
+			push_s(s, top, capacity, m - 1);//å­˜å…¥A(m-1,1)
 		}
 		else {
 			n--;
-			push_s(s, top, capacity, m - 1);//¥ı¦s¤JA(m-1,  )
-			push_s(s, top, capacity, m);//¦A¦s¤JA(m,n-1)¥ıºâ
+			push_s(s, top, capacity, m - 1);//å…ˆå­˜å…¥A(m-1,  )
+			push_s(s, top, capacity, m);//å†å­˜å…¥A(m,n-1)å…ˆç®—
 		}
 	}
 	delete[] s;
@@ -40,6 +40,7 @@ int main() {
 	int m, n;
 	cout << "Input m and n :";
 	cin >> m >> n;
+	if (m < 0 || n < 0)return 0;
 	cout << "A(" << m << "," << n << ")=" << Ackermann(m, n);
 	return 0;
 }
