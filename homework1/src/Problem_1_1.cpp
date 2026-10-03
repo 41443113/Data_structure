@@ -16,6 +16,7 @@ int main() {
 	int m, n;
 	cout << "Input m and n :";
 	cin >> m >> n;
+	if (m < 0 || n < 0)return 0;
 	cout << "A(" << m << "," << n << ")=" << Ackermann(m, n);
 	return 0;
 }
