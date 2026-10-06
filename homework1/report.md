@@ -101,12 +101,12 @@ A(m,n)=A(m-1,A(m,n-1))
 #include<iostream>
 using namespace std;
 
-void push_s(int* s, int& top, int capacity, int value) {
+bool push_s(int* s, int& top, int capacity, int value) {
 	if (top >= capacity - 1) {//當超出堆疊上限
-		cout << "Stack Overflow";
-		return;
+		return false;
 	}
 	s[++top] = value;//存入堆疊
+	return true;
 }
 
 int pop_s(int* s, int& top) {
@@ -117,7 +117,10 @@ int Ackermann(int m, int n) {
 	int capacity = 16;//堆疊容量
 	int top = -1;//堆疊位置
 	int* s = new int[capacity];
-	push_s(s, top, capacity, m);
+	if (!push_s(s, top, capacity, m)) {
+		delete[] s;
+		return -1;
+	}
 	while (top >= 0) {
 		m = pop_s(s, top);
 		if (m == 0) {
@@ -125,12 +128,21 @@ int Ackermann(int m, int n) {
 		}
 		else if (n == 0) {
 			n = 1;
-			push_s(s, top, capacity, m - 1);//存入A(m-1,1)
+			if (!push_s(s, top, capacity, m - 1)) {//存入m-1
+				delete[] s;
+				return -1;
+			}
 		}
 		else {
 			n--;
-			push_s(s, top, capacity, m - 1);//先存入A(m-1,  )
-			push_s(s, top, capacity, m);//再存入A(m,n-1)先算
+			if (!push_s(s, top, capacity, m - 1)) {//先存入m-1
+				delete[] s;
+				return -1;
+			}
+			if (!push_s(s, top, capacity, m)) {//再存入m先算
+				delete[] s;
+				return -1;
+			}
 		}
 	}
 	delete[] s;
@@ -141,13 +153,19 @@ int main() {
 	cout << "Input m and n :";
 	cin >> m >> n;
 	if (m < 0 || n < 0)return 0;
-	cout << "A(" << m << "," << n << ")=" << Ackermann(m, n);
+	int c = Ackermann(m, n);
+	if (c != -1) {
+		cout << "A(" << m << "," << n << ")=" << c;
+	}
+	else {
+		cout<< "Stack Overflow";
+	}
 	return 0;
 }
 ```
 ## 效能分析
 1. 時間複雜度：時間複雜度為：O(A(m,n))
-2. 空間複雜度：空間複雜度可表示為：O(1)。
+2. 空間複雜度：因為堆疊容量固定，空間複雜度可表示為：O(1)。
 
 ### 測試案例
 
@@ -176,13 +194,13 @@ A(1,4)=6
    ```
    int* s = new int[capacity];
    ```
-   建立整數陣列來作為 Stack。
+   建立整數陣列 s 來作為 Stack。
 
    並使用 top 來記錄 Stack 的頂端。
    
 2. Push
 
-   將資料存放至 Stack當中，如果超過堆疊上限會顯示Stack Overflow，易位。
+   將資料存放至 Stack當中，如果超過堆疊上限會顯示Stack Overflow，溢位。
 
 3. Pop
 
