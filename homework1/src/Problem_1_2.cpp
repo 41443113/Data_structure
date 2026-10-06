@@ -6,7 +6,7 @@ void push_s(int* s, int& top, int capacity, int value) {
 		cout << "Stack Overflow";
 		return;
 	}
-	s[++top] = value;//存入堆疊
+	s[++top] = value;//堆疊容量
 }
 
 int pop_s(int* s, int& top) {
