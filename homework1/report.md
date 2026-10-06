@@ -295,7 +295,7 @@ int main() {
 	int s;
 	cout << "輸入元素數量:";
 	cin >> s;
-	char* p = new char[s];//處存元素
+	char* p = new char[s];//儲存元素
 	cout << "輸入元素:";
 	for (int i = 0; i < s; i++) {
 		cin >> p[i];
