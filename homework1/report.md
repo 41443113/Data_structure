@@ -293,8 +293,10 @@ void powerset(int index,int m, bool* chosen, char* p) {
 }
 int main() {
 	int s;
+	cout << "輸入元素數量:";
 	cin >> s;
 	char* p = new char[s];//處存元素
+	cout << "輸入元素:";
 	for (int i = 0; i < s; i++) {
 		cin >> p[i];
 	}
@@ -346,4 +348,4 @@ powerset(S) = {(),(c),(b),(b,c),(a),(a,c),(a,b),(a,b,c)}
    chosen[index] = true;
    powerset(index + 1, m, chosen, p);
    ```
-   來進行選與不選將所有的子集合列出來，此外為避免重複的元素導致重複的集合，在先前的 sort 函式便已先將重複的去掉並將其排序好。
+   來進行選與不選將所有的子集合列出來，此外為避免重複的元素導致重複的集合，在先前的 sort 函式便將其排序好並將重複的去掉。
